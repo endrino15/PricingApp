@@ -5,5 +5,5 @@ import java.time.LocalDateTime;
 import com.bcnc.pricing.domain.model.Price;
 
 public interface GetPriceUseCase {
-    Price getApplicablePrice(Long brandId, Long productId, LocalDateTime applicationDate);
+    Price getApplicablePrice(long brandId, long productId, LocalDateTime applicationDate);
 }

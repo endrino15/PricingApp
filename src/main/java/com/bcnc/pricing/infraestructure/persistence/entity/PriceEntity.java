@@ -10,61 +10,66 @@ public class PriceEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Long brandId;
-	private Long productId;
-	private Long priceList;
+	private long id;
+	private long brandId;
+	private long productId;
+	private long priceList;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	private Integer priority;
-	private Double price;
+	private int priority;
+	private double price;
 	private String currency;
 
-	public PriceEntity() {}
+	public PriceEntity() {
+	}
 
-    public PriceEntity(Long id, Long brandId, Long productId, Long priceList,
-                       LocalDateTime startDate, LocalDateTime endDate, Integer priority,
-                       Double price, String currency) {
-        this.id = id;
-        this.brandId = brandId;
-        this.productId = productId;
-        this.priceList = priceList;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.priority = priority;
-        this.price = price;
-        this.currency = currency;
-    }
+	public PriceEntity(long id, long brandId, long productId, long priceList, LocalDateTime startDate,
+			LocalDateTime endDate, int priority, double price, String currency) {
+		this.id = id;
+		this.brandId = brandId;
+		this.productId = productId;
+		this.priceList = priceList;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.priority = priority;
+		this.price = price;
+		this.currency = currency;
+	}
 
-	public Long getId() {
+	public PriceEntity(Object object, long l, long m, long n, LocalDateTime of, LocalDateTime of2, int i, double d,
+			String string) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getBrandId() {
+	public long getBrandId() {
 		return brandId;
 	}
 
-	public void setBrandId(Long brandId) {
+	public void setBrandId(long brandId) {
 		this.brandId = brandId;
 	}
 
-	public Long getProductId() {
+	public long getProductId() {
 		return productId;
 	}
 
-	public void setProductId(Long productId) {
+	public void setProductId(long productId) {
 		this.productId = productId;
 	}
 
-	public Long getPriceList() {
+	public long getPriceList() {
 		return priceList;
 	}
 
-	public void setPriceList(Long priceList) {
+	public void setPriceList(long priceList) {
 		this.priceList = priceList;
 	}
 
@@ -84,19 +89,19 @@ public class PriceEntity {
 		this.endDate = endDate;
 	}
 
-	public Integer getPriority() {
+	public int getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Integer priority) {
+	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 
-	public Double getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

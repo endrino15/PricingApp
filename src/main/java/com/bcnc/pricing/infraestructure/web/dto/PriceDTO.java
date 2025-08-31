@@ -3,11 +3,11 @@ package com.bcnc.pricing.infraestructure.web.dto;
 import java.time.LocalDateTime;
 
 public record PriceDTO(
-        Long brandId,
-        Long productId,
-        Long priceList,
+        long brandId,
+        long productId,
+        long priceList,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        Double price,
+        double price,
         String currency
 ) {}
