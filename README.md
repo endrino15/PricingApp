@@ -12,7 +12,6 @@ Aplicación Spring Boot que expone un endpoint REST para consultar tarifas de pr
 - Uso de **DTOs** para separación de dominio y capa web.
 - Logs de SQL habilitados (`spring.jpa.show-sql=true`).
 
----
 
 ## Tecnologías
 
@@ -23,39 +22,12 @@ Aplicación Spring Boot que expone un endpoint REST para consultar tarifas de pr
 - Maven
 - JUnit 5 + MockMvc
 
-## Estructura del proyecto
 
-├── domain/
-│   ├── model/
-│   │   └── Price.java                  # Entidad de dominio (sin dependencias de Spring/JPA)
-│   └── service/
-│       └── PriceSelector.java          # Lógica de negocio para seleccionar tarifa correcta según fecha/prioridad
-│
-├── application/
-│   ├── port/in/
-│   │   └── GetPriceUseCase.java        # Interfaz de entrada (caso de uso)
-│   ├── port/out/
-│   │   └── LoadPricePort.java          # Puerto de salida (persistencia de precios)
-│   └── service/
-│       └── PriceService.java           # Implementación del caso de uso, usa PriceSelector y LoadPricePort
-│
-├── infrastructure/
-│   ├── persistence/
-│   │   ├── entity/
-│   │   │   └── PriceEntity.java       # Entidad JPA mapeada a H2
-│   │   ├── jpa/
-│   │   │   └── JpaPriceRepository.java  # Extiende JpaRepository<PriceEntity, Long>
-│   │   └── adapter/
-│   │       └── PriceRepositoryAdapter.java  # Implementa LoadPricePort usando JpaPriceRepository
-│   └── web/
-│       ├── controller/
-│       │   └── PriceController.java   # Endpoints REST GET /price?brandId=&productId=&date=
-│       └── dto/
-│           └── PriceDTO.java          # Entrada/salida REST
-│
-└── config/
-    └── H2DataInitializer.java          # Inicializa datos de ejemplo al arrancar la app
-    
+## Ejecución local
+### Requisitos
+- JDK 17+
+- Maven 3.9+
+
 ## Iniciación de datos
 
 Se cargan automáticamente al arrancar la aplicación con el H2DataInitializer:
@@ -65,7 +37,12 @@ BRAND_ID	PRODUCT_ID	PRICE_LIST	START_DATE	END_DATE	PRIORITY	PRICE	CURR
 1	35455	2	2020-06-14T15:00:00	2020-06-14T18:30:00	1	25.45	EUR
 1	35455	3	2020-06-15T00:00:00	2020-06-15T11:00:00	1	30.50	EUR
 1	35455	4	2020-06-15T16:00:00	2020-12-31T23:59:59	1	38.95	EUR
-    
+
+## EndPoints
+application → Casos de uso (lógica de negocio)
+domain → Entidades del dominio
+infrastructure → Adaptadores (JPA, REST, etc.)
+controller → Exposición de la API REST
     
 ## EndPoints
 
@@ -85,10 +62,26 @@ BRAND_ID	PRODUCT_ID	PRICE_LIST	START_DATE	END_DATE	PRIORITY	PRICE	CURR
 
 ## Test de Integracion
 
-Se incluyen 5 tests de ejemplo para validar distintos escenarios de fecha y hora:
+La aplicación incluye **tests de integración** para validar el correcto funcionamiento de la API REST en escenarios de negocio reales.
 
--Test 1: 2020-06-14T10:00:00
--Test 2: 2020-06-14T16:00:00
--Test 3: 2020-06-14T21:00:00
--Test 4: 2020-06-15T10:00:00
--Test 5: 2020-06-16T21:00:00
+### Tests implementados
+En **PriceControllerIntegrationTest** se definen **5 casos de prueba oficiales**, que cubren los escenarios de aplicación de tarifas solicitados:
+
+1. **Petición a las 10:00 del día 14** → Se espera la tarifa con `priceList = 1`.
+2. **Petición a las 16:00 del día 14** → Se espera la tarifa con `priceList = 2`.
+3. **Petición a las 21:00 del día 14** → Se espera la tarifa con `priceList = 1`.
+4. **Petición a las 10:00 del día 15** → Se espera la tarifa con `priceList = 3`.
+5. **Petición a las 21:00 del día 16** → Se espera la tarifa con `priceList = 4`.
+
+Cada test valida:
+- Código de estado HTTP (`200 OK`).  
+- Identificador de producto y marca en la respuesta.  
+- Tarifa aplicada (`priceList`).  
+- Precio final calculado (`price`).  
+
+### Ejecución
+Para ejecutar todos los tests:
+
+bash
+mvn test
+

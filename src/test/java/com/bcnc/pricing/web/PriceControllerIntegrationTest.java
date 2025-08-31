@@ -5,75 +5,65 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.hamcrest.number.IsCloseTo.closeTo;
+
+import com.bcnc.pricing.PricingApplication;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
+import com.bcnc.pricing.domain.constants.PriceTestConstants;
+
+import java.time.LocalDateTime;
+
+@SpringBootTest(classes = PricingApplication.class)
 @AutoConfigureMockMvc
 public class PriceControllerIntegrationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Test
-    void test1_at10AM_day14_product35455_brand1() throws Exception {
-        mockMvc.perform(get("/price")
-                .param("applicationDate", "2020-06-14T10:00:00")
-                .param("productId", "35455")
-                .param("brandId", "1")
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.priceList", is(1)))
-        .andExpect(jsonPath("$.price", is(35.50)));
-    }
+	private void assertPrice(LocalDateTime date, long productId, long brandId, long expectedPriceList,
+			double expectedPrice) throws Exception {
+		// Convertimos LocalDateTime a String en formato ISO
+		String dateStr = date.toString();
 
-    @Test
-    void test2_at16PM_day14_product35455_brand1() throws Exception {
-        mockMvc.perform(get("/price")
-                .param("applicationDate", "2020-06-14T16:00:00")
-                .param("productId", "35455")
-                .param("brandId", "1")
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.priceList", is(2)))
-        .andExpect(jsonPath("$.price", is(25.45)));
-    }
+		mockMvc.perform(get("/price").param("applicationDate", dateStr).param("productId", String.valueOf(productId))
+				.param("brandId", String.valueOf(brandId))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.productId", is((int) productId)))
+				.andExpect(jsonPath("$.brandId", is((int) brandId)))
+				.andExpect(jsonPath("$.priceList", is((int) expectedPriceList)))
+				.andExpect(jsonPath("$.price", closeTo(expectedPrice, 0.01)));
+	}
 
-    @Test
-    void test3_at21PM_day14_product35455_brand1() throws Exception {
-        mockMvc.perform(get("/price")
-                .param("applicationDate", "2020-06-14T21:00:00")
-                .param("productId", "35455")
-                .param("brandId", "1")
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.priceList", is(1)))
-        .andExpect(jsonPath("$.price", is(35.50)));
-    }
+	@Test
+	void testPriceAtDate1() throws Exception {
+		assertPrice(PriceTestConstants.DATE_1, PriceTestConstants.PRODUCT_ID, PriceTestConstants.BRAND_ID,
+				PriceTestConstants.PRICE_LIST_1, PriceTestConstants.PRICE_1);
+	}
 
-    @Test
-    void test4_at10AM_day15_product35455_brand1() throws Exception {
-        mockMvc.perform(get("/price")
-                .param("applicationDate", "2020-06-15T10:00:00")
-                .param("productId", "35455")
-                .param("brandId", "1")
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.priceList", is(3)))
-        .andExpect(jsonPath("$.price", is(30.50)));
-    }
+	@Test
+	void testPriceAtDate2() throws Exception {
+		assertPrice(PriceTestConstants.DATE_2, PriceTestConstants.PRODUCT_ID, PriceTestConstants.BRAND_ID,
+				PriceTestConstants.PRICE_LIST_2, PriceTestConstants.PRICE_2);
+	}
 
-    @Test
-    void test5_at21PM_day16_product35455_brand1() throws Exception {
-        mockMvc.perform(get("/price")
-                .param("applicationDate", "2020-06-16T21:00:00")
-                .param("productId", "35455")
-                .param("brandId", "1")
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.priceList", is(4)))
-        .andExpect(jsonPath("$.price", is(38.95)));
-    }
+	@Test
+	void testPriceAtDate3() throws Exception {
+		assertPrice(PriceTestConstants.DATE_3, PriceTestConstants.PRODUCT_ID, PriceTestConstants.BRAND_ID,
+				PriceTestConstants.PRICE_LIST_3, PriceTestConstants.PRICE_3);
+	}
+
+	@Test
+	void testPriceAtDate4() throws Exception {
+		assertPrice(PriceTestConstants.DATE_4, PriceTestConstants.PRODUCT_ID, PriceTestConstants.BRAND_ID,
+				PriceTestConstants.PRICE_LIST_4, PriceTestConstants.PRICE_4);
+	}
+
+	@Test
+	void testPriceAtDate5() throws Exception {
+		assertPrice(PriceTestConstants.DATE_5, PriceTestConstants.PRODUCT_ID, PriceTestConstants.BRAND_ID,
+				PriceTestConstants.PRICE_LIST_5, PriceTestConstants.PRICE_5);
+	}
 }

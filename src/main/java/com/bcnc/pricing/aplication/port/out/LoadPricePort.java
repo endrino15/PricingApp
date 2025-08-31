@@ -6,5 +6,5 @@ import java.util.List;
 import com.bcnc.pricing.domain.model.Price;
 
 public interface LoadPricePort {
-    List<Price> findPrices(Long brandId, Long productId, LocalDateTime applicationDate);
+	List<Price> findPrices(long brandId, long productId, LocalDateTime applicationDate);
 }
