@@ -88,21 +88,20 @@ Se cargan automáticamente al arrancar la aplicación con el H2DataInitializer:
     
 ## EndPoints
 
-application → Casos de uso (lógica de negocio)
-domain → Entidades del dominio
-infrastructure → Adaptadores (JPA, REST, etc.)
-controller → Exposición de la API REST
+**application** → Casos de uso (lógica de negocio)  
+**domain** → Entidades del dominio  
+**infrastructure** → Adaptadores (JPA, REST, etc.)  
+**controller** → Exposición de la API REST
 
--GET http://localhost:8080/price?applicationDate=2020-06-14T10:00:00&productId=35455&brandId=1
+GET precio aplicable:
+GET http://localhost:8080/price?applicationDate=2020-06-14T10:00:00&productId=35455&brandId=1
 
--Otros ejemplos utiles:
-
-curl "http://localhost:8080/price?applicationDate=2020-06-14T16:00:00&productId=35455&brandId=1"
-curl "http://localhost:8080/price?applicationDate=2020-06-15T10:00:00&productId=35455&brandId=1"
+Otros ejemplos útiles:
+curl "http://localhost:8080/price?applicationDate=2020-06-14T16:00:00&productId=35455&brandId=1"  
+curl "http://localhost:8080/price?applicationDate=2020-06-15T10:00:00&productId=35455&brandId=1"  
 curl "http://localhost:8080/price?applicationDate=2020-06-16T21:00:00&productId=35455&brandId=1"
 
--Respuesta:
-
+Respuesta esperada:
 {
   "brandId": 1,
   "productId": 35455,
