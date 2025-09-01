@@ -15,7 +15,7 @@ La aplicación sigue **arquitectura hexagonal / clean architecture**, aplica pri
      - [REST](#rest)
      - [Exceptions](#exceptions)
 3. [Requisitos](#requisitos)
-4. [Iniciación de datos](#iniciacion-de-datos)
+4. [Iniciación de datos](#iniciación-de-datos)
 5. [Endpoint](#endpoints)
 6. [Test](#test)
      - [Test de Unitarios](#test-de-unitarios)
@@ -77,11 +77,14 @@ La aplicación sigue **arquitectura hexagonal / clean architecture**, aplica pri
 
 Se cargan automáticamente al arrancar la aplicación con el H2DataInitializer:
 
-BRAND_ID	PRODUCT_ID	PRICE_LIST	START_DATE	END_DATE	PRIORITY	PRICE	CURR
-1	35455	1	2020-06-14T00:00:00	2020-12-31T23:59:59	0	35.50	EUR
-1	35455	2	2020-06-14T15:00:00	2020-06-14T18:30:00	1	25.45	EUR
-1	35455	3	2020-06-15T00:00:00	2020-06-15T11:00:00	1	30.50	EUR
-1	35455	4	2020-06-15T16:00:00	2020-12-31T23:59:59	1	38.95	EUR
+| BRAND_ID | PRODUCT_ID | PRICE_LIST | START_DATE           | END_DATE           | PRIORITY | PRICE | CURR |
+|----------|------------|------------|---------------------|---------------------|----------|-------|------|
+| 1        | 35455      | 1          | 2020-06-14T00:00:00 | 2020-12-31T23:59:59 | 0        | 35.50 | EUR  |
+| 1        | 35455      | 2          | 2020-06-14T15:00:00 | 2020-06-14T18:30:00 | 1        | 25.45 | EUR  |
+| 1        | 35455      | 3          | 2020-06-15T00:00:00 | 2020-06-15T11:00:00 | 1        | 30.50 | EUR  |
+| 1        | 35455      | 4          | 2020-06-15T16:00:00 | 2020-12-31T23:59:59 | 1        | 38.95 | EUR  |
+
+
     
 ## EndPoints
 
@@ -91,6 +94,12 @@ infrastructure → Adaptadores (JPA, REST, etc.)
 controller → Exposición de la API REST
 
 -GET http://localhost:8080/price?applicationDate=2020-06-14T10:00:00&productId=35455&brandId=1
+
+-Otros ejemplos utiles:
+
+curl "http://localhost:8080/price?applicationDate=2020-06-14T16:00:00&productId=35455&brandId=1"
+curl "http://localhost:8080/price?applicationDate=2020-06-15T10:00:00&productId=35455&brandId=1"
+curl "http://localhost:8080/price?applicationDate=2020-06-16T21:00:00&productId=35455&brandId=1"
 
 -Respuesta:
 
@@ -103,11 +112,6 @@ controller → Exposición de la API REST
   "price": 35.5,
   "currency": "EUR"
 }
-Otros ejemplos utiles:
-
--curl "http://localhost:8080/price?applicati	onDate=2020-06-14T16:00:00&productId=35455&brandId=1"
--curl "http://localhost:8080/price?applicationDate=2020-06-15T10:00:00&productId=35455&brandId=1"
--curl "http://localhost:8080/price?applicationDate=2020-06-16T21:00:00&productId=35455&brandId=1"
 
 ## Test
 ### Test de Unitarios
