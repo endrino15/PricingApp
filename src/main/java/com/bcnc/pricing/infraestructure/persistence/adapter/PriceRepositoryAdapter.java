@@ -2,14 +2,14 @@ package com.bcnc.pricing.infraestructure.persistence.adapter;
 
 import com.bcnc.pricing.aplication.port.out.LoadPricePort;
 import com.bcnc.pricing.domain.model.Price;
+import com.bcnc.pricing.domain.model.PriceCriteria;
 import com.bcnc.pricing.infraestructure.persistence.entity.PriceEntity;
 import com.bcnc.pricing.infraestructure.persistence.jpa.JpaPriceRepository;
-import com.bcnc.pricing.infraestructure.rest.mapper.PriceMapper;
+import com.bcnc.pricing.infraestructure.persistence.mapper.PriceEntityMapper;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Component;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,11 +17,13 @@ import java.util.List;
 public class PriceRepositoryAdapter implements LoadPricePort {
 
 	private final JpaPriceRepository jpaPriceRepository;
-	private final PriceMapper priceMapper;
+	private final PriceEntityMapper priceMapper;
 
 	 @Override
-	    public List<Price> findPrices(long brandId, long productId, LocalDateTime applicationDate) {
-		 List<PriceEntity> entities = jpaPriceRepository.findApplicablePrice(brandId, productId, applicationDate);
+	    public List<Price> findPrices(PriceCriteria priceCriteria) {
+		 List<PriceEntity> entities = jpaPriceRepository.findApplicablePrice(priceCriteria.brandId(),
+                 priceCriteria.productId(),
+                 priceCriteria.applicationDate());
 		    return entities.stream()
 		                   .map(priceMapper::toDomain)
 		                   .toList();

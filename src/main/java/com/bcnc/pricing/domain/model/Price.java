@@ -12,7 +12,7 @@ public class Price {
 	private final double price;
 	private final String currency;
 
-	public Price(long brandId, Long productId, Long priceList, LocalDateTime startDate, LocalDateTime endDate,
+	public Price(long brandId, long productId, long priceList, LocalDateTime startDate, LocalDateTime endDate,
 			int priority, double price, String currency) {
 		this.brandId = brandId;
 		this.productId = productId;

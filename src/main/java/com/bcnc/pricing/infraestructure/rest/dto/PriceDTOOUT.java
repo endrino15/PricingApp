@@ -1,8 +1,8 @@
-package com.bcnc.pricing.infraestructure.web.dto;
+package com.bcnc.pricing.infraestructure.rest.dto;
 
 import java.time.LocalDateTime;
 
-public record PriceDTO(
+public record PriceDTOOUT(
         long brandId,
         long productId,
         long priceList,

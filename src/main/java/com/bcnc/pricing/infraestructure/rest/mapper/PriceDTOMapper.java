@@ -1,14 +1,15 @@
-package com.bcnc.pricing.infraestructure.db.mapper;
+package com.bcnc.pricing.infraestructure.rest.mapper;
 
 import org.springframework.stereotype.Component;
 
 import com.bcnc.pricing.domain.model.Price;
-import com.bcnc.pricing.infraestructure.web.dto.PriceDTO;
+import com.bcnc.pricing.infraestructure.rest.dto.PriceDTOOUT;
 
 @Component
 public class PriceDTOMapper {
-    public PriceDTO toDTO(Price price) {
-        return new PriceDTO(
+    // Price → DTOOUT
+    public PriceDTOOUT toDTO(Price price) {
+        return new PriceDTOOUT(
                 price.getBrandId(),
                 price.getProductId(),
                 price.getPriceList(),
@@ -19,3 +20,4 @@ public class PriceDTOMapper {
         );
     }
 }
+
