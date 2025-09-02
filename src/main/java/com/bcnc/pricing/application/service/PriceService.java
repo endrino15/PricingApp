@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.bcnc.pricing.aplication.port.in.GetPriceUseCase;
 import com.bcnc.pricing.aplication.port.out.LoadPricePort;
+import com.bcnc.pricing.application.exception.PriceNotFoundException;
 import com.bcnc.pricing.domain.model.Price;
 import com.bcnc.pricing.domain.model.PriceCriteria;
 import com.bcnc.pricing.domain.service.PriceSelector;
-import com.bcnc.pricing.exception.PriceNotFoundException;
 
 @Service
 public class PriceService implements GetPriceUseCase {

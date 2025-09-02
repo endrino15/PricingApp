@@ -15,11 +15,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.bcnc.pricing.aplication.port.out.LoadPricePort;
+import com.bcnc.pricing.application.exception.PriceNotFoundException;
 import com.bcnc.pricing.application.service.PriceService;
 import com.bcnc.pricing.domain.constants.PriceTestConstants;
 import com.bcnc.pricing.domain.model.Price;
 import com.bcnc.pricing.domain.model.PriceCriteria;
-import com.bcnc.pricing.exception.PriceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 class PriceServiceTest {
